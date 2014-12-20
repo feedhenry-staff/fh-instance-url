@@ -1,0 +1,27 @@
+{
+  "name": "fh-instance-url",
+  "version": "0.0.0",
+  "description": "Returns the endpoint URL for a FeedHenry Node.js instance or Service",
+  "main": "index.js",
+  "scripts": {
+    "format": "./node_modules/.bin/jscs ./index.js",
+    "test": "npm run-script format && ./node_modules/.bin/mocha test/"
+  },
+  "keywords": [
+    "fh",
+    "feedhenry",
+    "node.js",
+    "node"
+  ],
+  "author": "Evan Shortiss",
+  "license": "MIT",
+  "devDependencies": {
+    "jscs": "~1.8.1",
+    "mocha": "~2.0.1",
+    "proxyquire": "~1.3.0"
+  },
+  "dependencies": {
+    "safejson": "~1.0.0",
+    "request": "~2.51.0"
+  }
+}
