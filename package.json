@@ -1,6 +1,6 @@
 {
   "name": "fh-instance-url",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Returns the endpoint URL for a FeedHenry Node.js instance or Service",
   "main": "index.js",
   "scripts": {
