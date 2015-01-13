@@ -20,19 +20,19 @@ var FH_MILLICORE = process.env['FH_MILLICORE'] = 'FH_MILLICORE'
 
 var iurl = proxyquire('../index.js', {
   request: function (opts, callback) {
-    var guid  = JSON.parse(opts.body).payload.guid;
+    var guid  = JSON.parse(opts.body).guid;
 
     if (guid === OK_RES_GUID) {
       callback(null, {
-        status: 200
+        statusCode: 200
       }, JSON.stringify(VALID_RESPONSE));
     } else if (guid === MALFORMED_RES_GUID) {
       callback(null, {
-        status: 200
+        statusCode: 200
       }, '{a;}');
     } else if (guid === UNEXPECTED_RES_GUID) {
       callback(null, {
-        status: 200
+        statusCode: 200
       }, '{}');
     } else {
       throw new Error('Test has no matching response!');

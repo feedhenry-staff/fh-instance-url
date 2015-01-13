@@ -7,7 +7,15 @@ var path = require('path')
   , HOSTS_PATH = '/box/srv/1.1/ide/apps/app/hosts'
   , ENV = process.env['FH_ENV'];
 
-module.exports = function getUrl (guid, callback) {
+function genHost (host) {
+  if (host.indexOf('feedhenry.com') === -1) {
+    return host.concat('.feedhenry.com');
+  }
+
+  return host;
+}
+
+module.exports = function getUrl (opts, callback) {
 
   function onParse (err, json) {
     if (err) {
@@ -28,26 +36,27 @@ module.exports = function getUrl (guid, callback) {
   function onResponse (err, res, body) {
     if (err) {
       callback(err, null);
-    } else if (res.status !== 200) {
+    } else if (res.statusCode !== 200) {
       callback('Non 200 status received from lookup');
     } else {
       safejson.parse(body, onParse);
     }
   }
 
-  var body, url;
+  var body, url, hostingDomain;
+
+  // Allow user specify the host (local dev for example)
+  if (typeof opts !== 'string') {
+    hostingDomain = (opts.domain) ? genHost(opts.domain) : MILLICORE_HOST;
+  } else {
+    hostingDomain = MILLICORE_HOST;
+  }
 
   url = 'https://'
-  url += path.join(MILLICORE_HOST, HOSTS_PATH);
+  url += path.join(hostingDomain, HOSTS_PATH);
 
   body = JSON.stringify({
-    instance: process.env['FH_INSTANCE'],
-    widget: process.env['FH_WIDGET'],
-    payload: {
-      guid: guid,
-      calling_guid: process.env['FH_WIDGET'],
-      env: ENV
-    }
+    guid: (typeof opts.guid !== 'undefined') ? opts.guid : opts
   });
 
   request({
@@ -57,7 +66,7 @@ module.exports = function getUrl (guid, callback) {
     method: 'POST',
     headers: {
       accept: 'application/json',
-      'content-type': 'application/json; charset=utf-8'
+      'Content-Type': 'application/json'
     }
   }, onResponse);
 };

@@ -34,7 +34,23 @@ function urlCallback (err, serviceUrl) {
 	}
 }
 
-instanceUrl(SERVICE_GUID, urlCallback); <= The Magic!
+instanceUrl(GUID, urlCallback); <= The Magic!
+```
+
+## Alternate Usage
+When developing locally the above code would not work unelss you copied and set 
+the FH_MILLICORE environment variable from the target domain on your 
+development machine/project. To use this module without setting the env var you 
+can do the following:
+
+```javascript
+var instanceUrl = require('fh-instance-url');
+
+instanceUrl({
+	guid: GUID,
+	domain: 'yourdomainprefix' // Leave out the .feedhenry.com part
+}, urlCallback); <= The Magic!
+
 ```
 
 ## Contributing
