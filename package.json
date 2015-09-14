@@ -1,11 +1,15 @@
 {
   "name": "fh-instance-url",
-  "version": "0.0.1",
-  "description": "Returns the endpoint URL for a FeedHenry Node.js instance or Service",
+  "version": "0.1.0",
+  "description": "Get a FeedHenry Cloud or Service URL.",
   "main": "index.js",
   "scripts": {
     "format": "./node_modules/.bin/jscs ./index.js",
     "test": "npm run-script format && ./node_modules/.bin/mocha test/"
+  },
+  "repository": {
+    "url": "git@github.com:feedhenry-staff/fh-instance-url.git",
+    "type": "git"
   },
   "keywords": [
     "fh",

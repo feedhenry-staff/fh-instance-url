@@ -52,7 +52,10 @@ describe('fh-instance-url', function () {
   it('Should handle a malformed response', function () {
     iurl(MALFORMED_RES_GUID, function (err, url) {
       assert.notEqual(err, null);
-      assert.equal(err, 'Failed to parse JSON from FH Instance Lookup');
+      assert.equal(
+        err.toString(),
+        'Error: Failed to parse JSON from FH Instance Lookup'
+      );
       assert.equal(url, null);
     });
   });
@@ -60,7 +63,10 @@ describe('fh-instance-url', function () {
   it('Should handle an invalid JSON response', function () {
     iurl(UNEXPECTED_RES_GUID, function (err, url) {
       assert.notEqual(err, null);
-      assert.equal(err, 'Unexpected JSON format from FH Instance Lookup');
+      assert.equal(
+        err.toString(),
+        'Error: Unexpected JSON format from FH Instance Lookup'
+      );
       assert.equal(url, null);
     });
   });

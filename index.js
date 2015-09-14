@@ -5,7 +5,8 @@ var path = require('path')
   , safejson = require('safejson')
   , MILLICORE_HOST = process.env['FH_MILLICORE']
   , HOSTS_PATH = '/box/srv/1.1/ide/apps/app/hosts'
-  , ENV = process.env['FH_ENV'];
+  , ENV = process.env.FH_ENV
+  , WIDGET = process.env.FH_WIDGET;
 
 function genHost (host) {
   if (host.indexOf('feedhenry.com') === -1) {
@@ -19,7 +20,12 @@ module.exports = function getUrl (opts, callback) {
 
   function onParse (err, json) {
     if (err) {
-      callback('Failed to parse JSON from FH Instance Lookup', null);
+      callback(
+        new Error('Failed to parse JSON from FH Instance Lookup'),
+        null
+      );
+    } else if (json.hosts && json.hosts.url) {
+      callback(null, json.hosts.url);
     } else {
       try {
         var dev = json.hosts['development-url']
@@ -28,7 +34,10 @@ module.exports = function getUrl (opts, callback) {
 
         callback(null, host);
       } catch (e) {
-        callback('Unexpected JSON format from FH Instance Lookup', null);
+        callback(
+          new Error('Unexpected JSON format from FH Instance Lookup'),
+          null
+        );
       }
     }
   }
@@ -37,7 +46,7 @@ module.exports = function getUrl (opts, callback) {
     if (err) {
       callback(err, null);
     } else if (res.statusCode !== 200) {
-      callback('Non 200 status received from lookup');
+      callback(new Error('Non 200 status received from lookup'), null);
     } else {
       safejson.parse(body, onParse);
     }
@@ -56,6 +65,8 @@ module.exports = function getUrl (opts, callback) {
   url += path.join(hostingDomain, HOSTS_PATH);
 
   body = JSON.stringify({
+    calling_guid: WIDGET,
+    env: ENV,
     guid: (typeof opts.guid !== 'undefined') ? opts.guid : opts
   });
 
