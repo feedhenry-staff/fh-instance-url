@@ -61,8 +61,16 @@ module.exports = function getUrl (opts, callback) {
     hostingDomain = MILLICORE_HOST;
   }
 
-  url = 'https://'
+  url = 'https://';
   url += path.join(hostingDomain, HOSTS_PATH);
+
+  if(!WIDGET) {
+    return callback(new Error('WIDGET value not found, is FH_WIDGET set?'));
+  }
+
+  if(!ENV) {
+    return callback(new Error('ENV value not found, is FH_ENV set?'));
+  }
 
   body = JSON.stringify({
     calling_guid: WIDGET,
