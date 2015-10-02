@@ -1,4 +1,6 @@
-# FeedHenry Instance URL
+FeedHenry Instance URL
+======================
+
 Retreieves the URL of a Service or Cloud Application in the FeedHenry platform.
 
 Pretty much a lift of the $fh.service API internals that resolves the service 
@@ -18,7 +20,7 @@ As an example you could couple this with Keyang's
 [HTML to PDF Converter](https://github.com/feedhenry-staff/fh-htmltopdf).
 
 ```javascript
-var instanceUrl = require('fh-instance-url'),
+var iurl = require('fh-instance-url'),
 	request = require('request'),
 	url = require('url');
 
@@ -34,7 +36,8 @@ function urlCallback (err, serviceUrl) {
 	}
 }
 
-instanceUrl(GUID, urlCallback); <= The Magic!
+// Can also do iurl.getUrl
+iurl(GUID, urlCallback);
 ```
 
 ## Alternate Usage
@@ -44,14 +47,39 @@ development machine/project. To use this module without setting the env var you
 can do the following:
 
 ```javascript
-var instanceUrl = require('fh-instance-url');
+var fhurl = require('fh-instance-url');
+var request = require('request');
 
-instanceUrl({
+fhurl.getUrl({
 	guid: GUID,
-	domain: 'yourdomainprefix' // Leave out the .feedhenry.com part
-}, urlCallback); <= The Magic!
+	domain: 'subdomain-name.feedhenry.com'
+}, function (err, url) {
+	if (err) {
+		// Oh noes...
+	} else {
+		var h = fhurl.getServiceCallHeaders();
+
+		// Add in more headers
+		h['content-type'] = 'application/json';
+
+		request({
+			url: url,
+			headers: h
+		}, console.log.bind(console));
+	}
+});
 
 ```
+
+## API
+
+#### getUrl(params, callback)
+Get the URL for a service based on the passed GUID or params. Params can be a 
+String (the GUID), or an object with the properties _guid_ and _domain_.
+
+#### getServiceCallHeaders()
+Returns an object containing headers required to make a service request.
+
 
 ## Contributing
 No strict guidelines. Just run the tests before making a pull request, and add 
@@ -63,4 +91,4 @@ it's just a trial of the tool more than anything.
 
 This module doesn't cache the result at present but doing so could be 
 beneficial. The $fh.service SDK doensn't cache the URL, so maybe this 
-shouldn't either.
+shouldn't either and you can do so instead at the application layer.
