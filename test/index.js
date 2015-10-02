@@ -42,33 +42,60 @@ var iurl = proxyquire('../index.js', {
 
 describe('fh-instance-url', function () {
 
-  it('Should work as expected with valid inputs', function () {
-    iurl(OK_RES_GUID, function (err, url) {
-      assert.equal(err, null);
-      assert.equal(typeof url, 'string');
+  describe('#getServiceCallHeaders', function () {
+
+    it('Should return values for headers', function () {
+      var headers = iurl.getServiceCallHeaders();
+
+      assert.equal(headers['x-fh-auth-app'], '');
+      assert.equal(headers['x-request-with'], 'FH_WIDGET');
     });
+
+    it('Should return env var values for headers', function () {
+      process.env.FH_APP_API_KEY = '123';
+
+      var headers = iurl.getServiceCallHeaders();
+
+      assert.equal(headers['x-fh-auth-app'], '123');
+      assert.equal(headers['x-request-with'], 'FH_WIDGET');
+
+      process.env.FH_APP_API_KEY = undefined;
+      process.env.FH_WIDGET = undefined;
+    });
+
   });
 
-  it('Should handle a malformed response', function () {
-    iurl(MALFORMED_RES_GUID, function (err, url) {
-      assert.notEqual(err, null);
-      assert.equal(
-        err.toString(),
-        'Error: Failed to parse JSON from FH Instance Lookup'
-      );
-      assert.equal(url, null);
-    });
-  });
+  describe('#getUrl', function () {
 
-  it('Should handle an invalid JSON response', function () {
-    iurl(UNEXPECTED_RES_GUID, function (err, url) {
-      assert.notEqual(err, null);
-      assert.equal(
-        err.toString(),
-        'Error: Unexpected JSON format from FH Instance Lookup'
-      );
-      assert.equal(url, null);
+    it('Should work as expected with valid inputs', function () {
+      iurl(OK_RES_GUID, function (err, url) {
+        assert.equal(err, null);
+        assert.equal(typeof url, 'string');
+      });
     });
+
+    it('Should handle a malformed response', function () {
+      iurl(MALFORMED_RES_GUID, function (err, url) {
+        assert.notEqual(err, null);
+        assert.equal(
+          err.toString(),
+          'Error: Failed to parse JSON from FH Instance Lookup'
+        );
+        assert.equal(url, null);
+      });
+    });
+
+    it('Should handle an invalid JSON response', function () {
+      iurl(UNEXPECTED_RES_GUID, function (err, url) {
+        assert.notEqual(err, null);
+        assert.equal(
+          err.toString(),
+          'Error: Unexpected JSON format from FH Instance Lookup'
+        );
+        assert.equal(url, null);
+      });
+    });
+
   });
 
 });

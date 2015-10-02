@@ -8,6 +8,15 @@ var path = require('path')
   , ENV = process.env.FH_ENV
   , WIDGET = process.env.FH_WIDGET;
 
+module.exports = getUrl;
+module.exports.getUrl = getUrl;
+module.exports.getServiceCallHeaders = getServiceCallHeaders;
+
+/**
+ * Normalise a host string to {HOST}.feedhenry.com
+ * @param  {String} host
+ * @return {String}
+ */
 function genHost (host) {
   if (host.indexOf('feedhenry.com') === -1) {
     return host.concat('.feedhenry.com');
@@ -16,7 +25,23 @@ function genHost (host) {
   return host;
 }
 
-module.exports = function getUrl (opts, callback) {
+/**
+ * Provides the required headers to make a service call
+ * @return {Object}
+ */
+function getServiceCallHeaders () {
+  return {
+    'x-fh-auth-app': process.env.FH_APP_API_KEY || '',
+    'x-request-with': process.env.FH_WIDGET || ''
+  };
+};
+
+/**
+ * Retrieve the cloud URL for a given GUID
+ * @param  {Object}   opts
+ * @param  {Function} callback
+ */
+function getUrl (opts, callback) {
 
   function onParse (err, json) {
     if (err) {
@@ -64,11 +89,11 @@ module.exports = function getUrl (opts, callback) {
   url = 'https://';
   url += path.join(hostingDomain, HOSTS_PATH);
 
-  if(!WIDGET) {
+  if (!WIDGET) {
     return callback(new Error('WIDGET value not found, is FH_WIDGET set?'));
   }
 
-  if(!ENV) {
+  if (!ENV) {
     return callback(new Error('ENV value not found, is FH_ENV set?'));
   }
 
