@@ -43,6 +43,12 @@ function getServiceCallHeaders () {
  */
 function getUrl (opts, callback) {
 
+  // if FH_SERVICE_MAP exists, we're in local development
+  if (process.env.FH_SERVICE_MAP) {
+    var port = process.env.FH_PORT || process.env.OPENSHIFT_NODEJS_PORT || 8001;
+    return callback(null, 'http://localhost:' + port);
+  }
+
   function onParse (err, json) {
     if (err) {
       callback(

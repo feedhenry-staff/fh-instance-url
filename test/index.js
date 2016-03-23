@@ -96,6 +96,15 @@ describe('fh-instance-url', function () {
       });
     });
 
+    it('Should handle local development', function () {
+      process.env.FH_SERVICE_MAP = true
+      iurl("anything", function (err, url) {
+        assert.equal(err, null);
+        assert.equal(typeof url, 'string');
+        assert.equal( url, 'http://localhost:8001');
+      });
+    });
+
   });
 
 });
