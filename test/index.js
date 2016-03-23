@@ -96,6 +96,31 @@ describe('fh-instance-url', function () {
       });
     });
 
+    it('Should handle local development if a service map entry exists', function () {
+      process.env.FH_SERVICE_MAP = JSON.stringify({
+        localtest: 'http://localhost:8001'
+      });
+      iurl('localtest', function (err, url) {
+        assert.equal(err, null);
+        assert.equal(typeof url, 'string');
+        assert.equal( url, 'http://localhost:8001');
+      });
+    });
+
+    it('Should handle local development if no service map entry exists', function () {
+      process.env.FH_SERVICE_MAP = JSON.stringify({
+        localtest: 'http://localhost:8001'
+      });
+      iurl('badtest', function (err, url) {
+        assert.notEqual(err, null);
+        assert.equal(
+          err.toString(),
+          'Error: No entry found in FH_SERVICE_MAP'
+        );
+        assert.equal(url, null);
+      });
+    });
+
   });
 
 });
