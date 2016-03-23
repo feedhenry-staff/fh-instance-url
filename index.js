@@ -47,7 +47,14 @@ function getUrl (opts, callback) {
   if (process.env.FH_SERVICE_MAP) {
     var guid = opts.guid || opts;
     var serviceMap = JSON.parse(process.env.FH_SERVICE_MAP);
-    return callback(null, serviceMap[guid]);
+    if (serviceMap[guid]) {
+      return callback(null, serviceMap[guid]);
+    } else {
+      return callback(
+        new Error('No entry found in FH_SERVICE_MAP'),
+        null
+      );
+    }
   }
 
   function onParse (err, json) {
