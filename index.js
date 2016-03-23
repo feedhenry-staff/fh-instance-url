@@ -45,8 +45,9 @@ function getUrl (opts, callback) {
 
   // if FH_SERVICE_MAP exists, we're in local development
   if (process.env.FH_SERVICE_MAP) {
-    var port = process.env.FH_PORT || process.env.OPENSHIFT_NODEJS_PORT || 8001;
-    return callback(null, 'http://localhost:' + port);
+    var guid = opts.guid || opts;
+    var serviceMap = JSON.parse(process.env.FH_SERVICE_MAP);
+    return callback(null, serviceMap[guid]);
   }
 
   function onParse (err, json) {

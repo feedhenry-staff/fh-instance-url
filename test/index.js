@@ -97,8 +97,10 @@ describe('fh-instance-url', function () {
     });
 
     it('Should handle local development', function () {
-      process.env.FH_SERVICE_MAP = true
-      iurl("anything", function (err, url) {
+      process.env.FH_SERVICE_MAP = JSON.stringify({
+        localtest: 'http://localhost:8001'
+      });
+      iurl('localtest', function (err, url) {
         assert.equal(err, null);
         assert.equal(typeof url, 'string');
         assert.equal( url, 'http://localhost:8001');
