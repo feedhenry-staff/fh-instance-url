@@ -1,6 +1,6 @@
 {
   "name": "fh-instance-url",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Get a FeedHenry Cloud or Service URL.",
   "main": "index.js",
   "scripts": {
