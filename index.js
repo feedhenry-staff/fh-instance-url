@@ -18,7 +18,8 @@ module.exports.getServiceCallHeaders = getServiceCallHeaders;
  * @return {String}
  */
 function genHost (host) {
-  if (host.indexOf('feedhenry.com') === -1) {
+  if (host.indexOf('feedhenry.com') === -1 &&
+    host.indexOf('redhatmobile.com') === -1) {
     return host.concat('.feedhenry.com');
   }
 
