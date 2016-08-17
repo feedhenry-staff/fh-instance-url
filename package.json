@@ -1,11 +1,16 @@
 {
   "name": "fh-instance-url",
-  "version": "0.4.0",
-  "description": "Get a FeedHenry Cloud or Service URL.",
-  "main": "index.js",
+  "version": "1.0.0",
+  "description": "Get a FeedHenry/RHMAP Cloud or MBaaS Service URL.",
+  "main": "lib/index.js",
   "scripts": {
-    "format": "./node_modules/.bin/jscs ./index.js",
-    "test": "npm run-script format && ./node_modules/.bin/mocha test/"
+    "linelint": "linelint $(ls *.js)",
+    "jshint": "jshint $(ls *.js)",
+    "check-coverage": "istanbul check-coverage --statements 95 --branches 95 --functions 95 --lines 95",
+    "cover": "istanbul cover -x *.test.js _mocha test/",
+    "format": "npm run linelint && npm run jshint",
+    "unit": "mocha test/",
+    "test": "npm run format && npm run unit && npm run cover && npm run check-coverage"
   },
   "repository": {
     "url": "git@github.com:feedhenry-staff/fh-instance-url.git",
@@ -15,17 +20,29 @@
     "fh",
     "feedhenry",
     "node.js",
-    "node"
+    "node",
+    "rhmap"
   ],
   "author": "Evan Shortiss",
   "license": "Apache-2.0",
   "devDependencies": {
-    "jscs": "~1.8.1",
-    "mocha": "~2.0.1",
-    "proxyquire": "~1.3.0"
+    "chai": "^3.5.0",
+    "clear-require": "^1.0.1",
+    "istanbul": "^0.4.3",
+    "jshint": "^2.9.2",
+    "linelint": "^1.0.0",
+    "mocha": "^2.0.1",
+    "proxyquire": "~1.3.0",
+    "sinon": "^1.17.4"
   },
   "dependencies": {
-    "safejson": "~1.0.0",
-    "request": "~2.51.0"
+    "env-var": "^2.0.0",
+    "fh-bunyan": "^0.1.3",
+    "lodash.get": "^4.4.2",
+    "memory-cache": "^0.1.6",
+    "once": "^1.3.3",
+    "request": "^2.51.0",
+    "safejson": "^1.0.1",
+    "verror": "^1.6.1"
   }
 }
