@@ -26,20 +26,20 @@
   "author": "Evan Shortiss",
   "license": "Apache-2.0",
   "devDependencies": {
-    "chai": "^3.5.0",
-    "clear-require": "^1.0.1",
-    "istanbul": "^0.4.3",
-    "jshint": "^2.9.2",
-    "linelint": "^1.0.0",
-    "mocha": "^2.0.1",
+    "chai": "~3.5.0",
+    "clear-require": "~1.0.1",
+    "istanbul": "~0.4.3",
+    "jshint": "~2.9.2",
+    "linelint": "~1.0.0",
+    "mocha": "~2.0.1",
     "proxyquire": "~1.3.0",
-    "sinon": "^1.17.4"
+    "sinon": "~1.17.4"
   },
   "dependencies": {
-    "env-var": "^2.0.0",
-    "fh-bunyan": "^0.1.3",
-    "memory-cache": "^0.1.6",
-    "request": "^2.51.0",
-    "verror": "^1.6.1"
+    "env-var": "~2.0.0",
+    "fh-bunyan": "~0.1.3",
+    "memory-cache": "~0.1.6",
+    "request": "~2.51.0",
+    "verror": "~1.6.1"
   }
 }
