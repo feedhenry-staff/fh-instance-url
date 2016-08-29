@@ -74,22 +74,6 @@ describe(__filename, function () {
       });
     });
 
-    it('should fail due to bad fhconfig', function (done) {
-      require('clear-require').all();
-      stubs['./config'] = {
-        services: 'nope'
-      };
-      mod = proxyquire('../lib/util', stubs);
-
-      mod.getServiceMap(function (err) {
-        expect(err).to.exist;
-        expect(err.toString()).to.contain(
-          'failed to parse fhconfig service mappings'
-        );
-        done();
-      });
-    });
-
     it('should handle no mappings being found', function (done) {
       mod.getServiceMap(function (err, map) {
         expect(err).to.not.exist;
