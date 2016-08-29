@@ -4,8 +4,8 @@
   "description": "Get a FeedHenry/RHMAP Cloud or MBaaS Service URL.",
   "main": "lib/index.js",
   "scripts": {
-    "linelint": "linelint $(ls *.js)",
-    "jshint": "jshint $(ls *.js)",
+    "linelint": "linelint lib/*.js",
+    "jshint": "jshint lib/*.js",
     "check-coverage": "istanbul check-coverage --statements 95 --branches 95 --functions 95 --lines 95",
     "cover": "istanbul cover -x *.test.js _mocha test/",
     "format": "npm run linelint && npm run jshint",
