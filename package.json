@@ -1,8 +1,9 @@
 {
   "name": "fh-instance-url",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Get a FeedHenry/RHMAP Cloud or MBaaS Service URL.",
   "main": "lib/index.js",
+  "files": ["./lib"],
   "scripts": {
     "linelint": "linelint lib/*.js",
     "jshint": "jshint lib/*.js",
@@ -10,7 +11,8 @@
     "cover": "istanbul cover -x *.test.js _mocha test/",
     "format": "npm run linelint && npm run jshint",
     "unit": "mocha test/",
-    "test": "npm run format && npm run unit && npm run cover && npm run check-coverage"
+    "test": "npm run format && npm run unit && npm run cover && npm run check-coverage",
+    "example": "node example/index.js | bunyan"
   },
   "repository": {
     "url": "git@github.com:feedhenry-staff/fh-instance-url.git",
@@ -21,7 +23,9 @@
     "feedhenry",
     "node.js",
     "node",
-    "rhmap"
+    "rhmap",
+    "mbaas",
+    "url"
   ],
   "author": "Evan Shortiss",
   "license": "Apache-2.0",

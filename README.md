@@ -107,6 +107,14 @@ in the RHMAP Studio.
 Used to point MBaaS requests to a custom host during local development.
 
 
+## CHANGELOG
+
+* 1.1.0 - Add improved trace logging for debugging support. Reduce install
+size by limiting files included in package.
+* 1.0.0 - Introduce fhconfig.json support. Rewrite module and improve testing.
+* 0.X.Y - Here be dragons
+
+
 ## Contributing
 No strict guidelines. Just run the tests before making a pull request, and add
 new ones if required. You can run tests by cloning locally and running
